@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
 import android.net.Uri;
+import java.io.File;
 import java.util.Map;
-import java.util.ArrayList;
+import java.util.List;
 import com.nononsenseapps.filepicker.FilePickerActivity;
+import com.nononsenseapps.filepicker.Utils;
 import android.os.Environment;
 import android.os.Build;
 import android.content.ClipData;
@@ -76,31 +78,12 @@ public class DialogShowPicker extends Activity{
 
         // Retrieve file, folders paths
         if (requestCode == FILE_CODE && resultCode == Activity.RESULT_OK) {
-            if (data.getBooleanExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, false)) {
-                // For JellyBean and above
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    ClipData clip = data.getClipData();
-
-                    if (clip != null) {
-                        for (int i = 0; i < clip.getItemCount(); i++) {
-                            jsonArray.put(clip.getItemAt(i).getUri().toString());
-                        }
-                    }
-                // For Ice Cream Sandwich
-                } else {
-                    ArrayList<String> paths = data.getStringArrayListExtra
-                                (FilePickerActivity.EXTRA_PATHS);
-
-                    if (paths != null) {
-                        for (String path: paths) {
-                            jsonArray.put(Uri.parse(path).toString());
-                        }
-                    }
-                }
-
-            } else {
-                jsonArray.put(data.getData().toString());
-            }
+            List<Uri> files = Utils.getSelectedFilesFromResult(data);
+            for (Uri uri: files) {
+                File file = Utils.getFileForUri(uri);
+                Uri fileUri = Uri.fromFile(file);
+                jsonArray.put(fileUri.toString());
+            }                                     
         }
 
         // Send information

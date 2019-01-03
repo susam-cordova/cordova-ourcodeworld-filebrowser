@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="com.ourcodeworld.plugins.Filebrowser" version="2.0.0">
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="com.ourcodeworld.plugins.Filebrowser" version="2.0.1">
     <name>Our Code World Filebrowser</name>
     <engines>
         <engine name="cordova" version=">=3.4.0" />
@@ -35,8 +35,8 @@
             </activity>
             
             <provider
-                android:name="android.support.v4.content.FileProvider"
-                android:authorities="${applicationId}.provider"
+                android:name="com.nononsenseapps.filepicker.FilePickerFileProvider"
+                android:authorities="${applicationId}.filepickerfileprovider"
                 android:exported="false"
                 android:grantUriPermissions="true">
                 <meta-data

@@ -1,7 +1,8 @@
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    compile 'com.nononsenseapps:filepicker:4.2.1'
+    implementation 'com.github.susam-cordova:NoNonsense-FilePicker:4.4.1'
 }
